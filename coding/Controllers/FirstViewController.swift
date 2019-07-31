@@ -21,7 +21,6 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     var uAge : Int = -1
     var userName : String = ""
 
-    
     //Método que se ejecuta en el momento que se carga por primera vez la app.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +30,6 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
     
     //FUNCIONES DELEGATE ---------------------------
     //Funcion que se ejecuta cuando el usuario hace click en IR (intro)
@@ -77,10 +75,8 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     // BUTTON ------------------------------------------------
     @IBAction func buttonTouched(_ sender: UIButton) {
         
-        
         let context = LAContext()
         var error : NSError?
-        
         
         let shouldEnterTheParty = (self.userName == "Salva Marti") || (self.uAge >= 18)
         if (shouldEnterTheParty) {
@@ -95,20 +91,21 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
                 context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: razon) { (success, error) in
                     
                     if success {
-                        self.showAlertController("Autentificacion OK")
-                        self.view.backgroundColor = UIColor(displayP3Red: 49.0/255.0, green: 237.0/255.0, blue: 93.0/255.0, alpha: 0.80)
+                        self.showAlertController("Autentificacion OK", v : true)
+                        //self.paintBackground(variable: true)
                     }
                     else {
-                        self.showAlertController("Autentificacion falló")
+                        self.showAlertController("Autentificacion falló", v: false)
+                        //self.paintBackground(variable: false)
                     }
 
                 }
             }
             else {
-                self.showAlertController("TEST")
+                self.view.backgroundColor = UIColor(displayP3Red: 220.0/255.0, green: 83.0/255.0, blue: 74.0/255.0, alpha: 0.80)
             }
             
-            self.view.backgroundColor = UIColor(displayP3Red: 250.0/255.0, green: 50.0/255.0, blue: 73/255.0, alpha: 0.80)
+            //self.view.backgroundColor = UIColor(displayP3Red: 250.0/255.0, green: 50.0/255.0, blue: 73/255.0, alpha: 0.80)
         }
         
     }
@@ -124,10 +121,24 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
         self.view.backgroundColor = UIColor(displayP3Red: 239.0/255.0, green: 239.0/255.0, blue: 244/255.0, alpha: 1)
     }
     
-    func showAlertController( _ message: String) -> Void {
+    func showAlertController( _ message: String, v : Bool) -> Void {
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        let ok = UIAlertAction(title: "Ok", style: .default) { _ in
+            self.paintBackground(variable: v)
+        }
+        
         alertController.addAction(ok)
+        self.show(alertController, sender: nil)
     }
     
+    func paintBackground(variable: Bool) -> Void {
+        if(variable) {
+            self.view.backgroundColor = UIColor(displayP3Red: 49.0/255.0, green: 237.0/255.0, blue: 93.0/255.0, alpha: 0.80)
+        }
+        else {
+            self.view.backgroundColor = UIColor(displayP3Red: 250.0/255.0, green: 50.0/255.0, blue: 73/255.0, alpha: 0.80)
+        }
+    }
+
 }

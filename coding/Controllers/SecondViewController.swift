@@ -29,9 +29,7 @@ class SecondViewController: UIViewController {
     var fibonacci : [Int] = [0,1]
     //El numero de valores que queremos añadir al array
     var fibId : Int = 1
-    
     var calculateGoldNum = false
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
